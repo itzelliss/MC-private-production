@@ -50,4 +50,12 @@ cmsrel CMSSW_15_0_6      # NanoAOD
 ```
  
 ---
- 
+## Generate cards for a specific mass point
+
+```
+cd MC-private-production/cards/
+bash get_cards.sh <M_A mass> #Example: bash get_cards.sh 5
+```
+
+
+
