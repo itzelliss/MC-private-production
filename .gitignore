@@ -1,0 +1,11 @@
+# large binaries — these live on EOS
+*.root
+*.tar.xz
+*.zip
+
+# condor output — regenerated every run, can be GBs
+condor/logs/
+
+# python cruft
+__pycache__/
+*.pyc
