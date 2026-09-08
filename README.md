@@ -56,6 +56,43 @@ cmsrel CMSSW_15_0_6      # NanoAOD
 cd MC-private-production/cards/
 bash get_cards.sh <M_A mass> #Example: bash get_cards.sh 5
 ```
+ ---
+## Generate gridpacks
+
+```
+cd YOURWORKDIRECTORY
+cd /genproductions_scripts/bin/MadGraph5_aMCatNLO
+```
+Make sure your proxy is active
+```
+voms-proxy-info -timeleft
+```
+Submit a job to generate the gridopack
+```
+./submit_condor_gridpack_generation.sh \ ggh01_M125_Toa01a01_M<M_A-mass>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/M<M_A-mass> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
+```
+
+## Prepare the fragment
+```
+cd YOURWORKDIRECTORY
+cd /MC-private-production/fragments
+bash get_fragment.sh <M_A mass> #Example: bash get_fragment.sh 5
+cd ../../CMSSW_14_0_21/src
+cmsenv
+scram b -j 8
+```
+## Submit jobs for event generation
+``
+cd /MC-private-production/condor
+``
+Modify the paths in this script to your working directory path before running it (``RELBASE`` and ``OUTBASE``).
+``
+bash submit_jobs.sh <M_A mass> #Example usage: ./submit_jobs.sh 5
+```
+You can monitor the job status using ``condor_q``.
+
+
+
 
 
 
