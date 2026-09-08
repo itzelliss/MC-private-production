@@ -82,17 +82,14 @@ cmsenv
 scram b -j 8
 ```
 ## Submit jobs for event generation
-``
+```
 cd /MC-private-production/condor
-``
+```
+
 Modify the paths in this script to your working directory path before running it (``RELBASE`` and ``OUTBASE``).
-``
+
+```
 bash submit_jobs.sh <M_A mass> #Example usage: ./submit_jobs.sh 5
 ```
+
 You can monitor the job status using ``condor_q``.
-
-
-
-
-
-
