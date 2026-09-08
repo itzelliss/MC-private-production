@@ -2,7 +2,7 @@
 # Condor submission for h -> aa -> mumutautau private production
 #   campaign : RunIII2024Summer24
 #   mass     : m_a = 10 GeV
-#   50 jobs x 100 events = 5000 events
+#   100 jobs x 100 events = 10000 events
 #
 # Submit with:
 #   voms-proxy-init --voms cms --valid 192:00
