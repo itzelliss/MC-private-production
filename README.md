@@ -61,7 +61,7 @@ bash get_cards.sh <M_A mass> #Example: bash get_cards.sh 5
 
 ```
 cd YOURWORKDIRECTORY
-cd /genproductions_scripts/bin/MadGraph5_aMCatNLO
+cd genproductions_scripts/bin/MadGraph5_aMCatNLO
 ```
 Make sure your proxy is active
 ```
@@ -70,6 +70,26 @@ voms-proxy-info -timeleft
 Submit a job to generate the gridopack
 ```
 ./submit_condor_gridpack_generation.sh \ ggh01_M125_Toa01a01_M<M_A-mass>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/M<M_A-mass> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
+```
+For easier use you can use this bash script insetad of the last step:
+```
+#!/bin/bash
+
+MASS=$1
+
+CARDS=~/workspace/Run3/MC-private-production/cards/M${MASS}
+
+if [ ! -d "$CARDS" ]; then
+    echo "no cards at $CARDS"
+    exit 1
+fi
+
+./submit_condor_gridpack_generation.sh \
+  ggh01_M125_Toa01a01_M${MASS}_Tomumutautau \
+  "$CARDS" \
+  $PWD \
+  el8_amd64_gcc12 \
+  CMSSW_14_0_21
 ```
 
 ## Prepare the fragment
