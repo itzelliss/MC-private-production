@@ -54,7 +54,7 @@ cmsrel CMSSW_15_0_6      # NanoAOD
 
 ```
 cd MC-private-production/cards/
-bash get_cards.sh <M_A mass> #Example: bash get_cards.sh 5
+bash get_cards.sh <M_H mass> <M_A mass> #Example: bash get_cards.sh 125 5
 ```
  ---
 ## Generate gridpacks
