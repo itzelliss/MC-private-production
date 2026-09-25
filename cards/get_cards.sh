@@ -1,30 +1,53 @@
 #!/bin/bash
 
 #########################################
-#This script generates the cards for a given mass. 
-#It copies the M10 directory and renames it to the desired mass. It also modifies the customizecards.dat and proc_card.dat files accordingly. 
-
-#Example usage: ./get_cards.sh 10
+#This script generates the cards for a given mass (MH, MA).
+#It copies cards from MH125/MA10 directory and renames it to the desired mass. It also modifies the customizecards.dat and proc_card.dat files accordingly. 
+#Right now copying files from MH125 for heavier higgs too (might change in future)
+#Example usage: ./get_cards.sh 125 15
 #############################################
 
 
 #Arguments
-MASS=$1
+MASS_H=$1
+MASS_A=$2
 
-cp -r M10 M${MASS}
+mkdir -p MH${MASS_H}
+cp -r MH125/MA10 MH${MASS_H}/MA${MASS_A}
 
-cd M${MASS}
+cd MH${MASS_H}/MA${MASS_A}
 
-for f in *M10*; do mv "$f" "${f/M10/M${MASS}}"; done
+#for f in *M${MASS_H}*M10*; do mv "$f" "${f/M10/M${MASS_A}}"; done
+for f in *M125*M10*; do
+    new="${f/M125/M${MASS_H}}"
+    new="${new/M10/M${MASS_A}}"
+    mv "$f" "$new"
+done
 
 #Modify customizecards.dat
-cat > ggh01_M125_Toa01a01_M${MASS}_Tomumutautau_customizecards.dat << EOF
-set param_card mass 25 125
-set param_card mass 36 $MASS
+cat > ggh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_customizecards.dat << EOF
+set param_card mass 25 ${MASS_H}
+set param_card mass 36 $MASS_A
+EOF
+
+cat > wh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_customizecards.dat << EOF
+set param_card mass 25 ${MASS_H}
+set param_card mass 36 $MASS_A
+EOF
+
+cat > zh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_customizecards.dat << EOF
+set param_card mass 25 ${MASS_H}
+set param_card mass 36 $MASS_A
+EOF
+
+cat > vbfh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_customizecards.dat << EOF
+set param_card mass 25 ${MASS_H}
+set param_card mass 36 $MASS_A
 EOF
 
 #Modify the output directory for *proc_card.dat
-sed -i "s/M10/M${MASS}/" ggh01_M125_Toa01a01_M${MASS}_Tomumutautau_proc_card.dat
+#sed -i "s/M10/M${MASS_A}/" *_proc_card.dat
+sed -i "s/M125/M${MASS_H}/; s/M10/M${MASS_A}/" *_proc_card.dat
 
 #Ran succesfully
-echo "Cards generated for M${MASS}"
+echo "Cards generated for M${MASS_A}"
