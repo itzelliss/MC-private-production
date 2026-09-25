@@ -23,6 +23,7 @@ set -o pipefail
 
 JOBID=$1
 MASS=$2
+HMASS=250
 NEVENTS=100
 
 # Seed must be unique per job and NON-ZERO.
@@ -31,14 +32,14 @@ MASS_NUM=${MASS#M}
 SEED=$(( 100000 + MASS_NUM * 1000 + JOBID ))
 
 CAMPAIGN=RunIII2024Summer24
-SAMPLE=ggh01_M125_Toa01a01_${MASS}_Tomumutautau
+SAMPLE=ggh01_M${HMASS}_Toa01a01_${MASS}_Tomumutautau
 
 RELBASE=/afs/cern.ch/user/i/isalazar/workspace/Run3
 REL_GS=${RELBASE}/CMSSW_14_0_21
 REL_MINI=${RELBASE}/CMSSW_15_0_4
 REL_NANO=${RELBASE}/CMSSW_15_0_6
 
-OUTBASE=/eos/user/i/isalazar/Run3/hAA/samples/${CAMPAIGN}/${MASS}
+OUTBASE=/eos/user/i/isalazar/Run3/hAA/samples/${CAMPAIGN}/H${HMASS}/${MASS}
 
 FRAGMENT=Configuration/GenProduction/python/${SAMPLE}_13p6TeV_fragment.py
 
