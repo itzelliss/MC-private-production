@@ -1,18 +1,22 @@
 import FWCore.ParameterSet.Config as cms
+
+
+externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction/gridpacks/wh01_M125_Toa01a01_M20_Tomumutautau_el8_amd64_gcc12_CMSSW_14_0_21_tarball.tar.xz'),
+    nEvents = cms.untracked.uint32(5000),
+    numberOfParameters = cms.uint32(1),
+    outputFile = cms.string('cmsgrid_final.lhe'),
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh'),
+    generateConcurrently = cms.untracked.bool(False)
+)
+
+ 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
 from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
 
-externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/i/isalazar/Run3/signal_production/gridpacks/ggh01_M125_Toa01a01_M4_Tomumutautau_el8_amd64_gcc12_CMSSW_14_0_21_tarball.tar.xz'),
-    nEvents = cms.untracked.uint32(5000),
-    numberOfParameters = cms.uint32(1),
-    outputFile = cms.string('cmsgrid_final.lhe'),
-    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh')
-)
-
 generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
-    maxEventsToPrint = cms.untracked.int32(5),
+    maxEventsToPrint = cms.untracked.int32(1),
     pythiaPylistVerbosity = cms.untracked.int32(1),
     filterEfficiency = cms.untracked.double(1.0),
     pythiaHepMCVerbosity = cms.untracked.bool(False),
