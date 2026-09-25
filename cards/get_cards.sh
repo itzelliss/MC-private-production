@@ -17,7 +17,6 @@ cp -r MH125/MA10 MH${MASS_H}/MA${MASS_A}
 
 cd MH${MASS_H}/MA${MASS_A}
 
-#for f in *M${MASS_H}*M10*; do mv "$f" "${f/M10/M${MASS_A}}"; done
 for f in *M125*M10*; do
     new="${f/M125/M${MASS_H}}"
     new="${new/M10/M${MASS_A}}"
@@ -46,7 +45,6 @@ set param_card mass 36 $MASS_A
 EOF
 
 #Modify the output directory for *proc_card.dat
-#sed -i "s/M10/M${MASS_A}/" *_proc_card.dat
 sed -i "s/M125/M${MASS_H}/; s/M10/M${MASS_A}/" *_proc_card.dat
 
 #Ran succesfully
