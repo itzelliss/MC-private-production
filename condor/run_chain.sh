@@ -23,7 +23,7 @@ set -o pipefail
 
 JOBID=$1
 MASS=$2
-HMASS=250
+HMASS=500
 NEVENTS=100
 
 # Seed must be unique per job and NON-ZERO.
