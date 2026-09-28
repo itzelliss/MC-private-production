@@ -22,24 +22,25 @@ set -o pipefail
 # ---------------------------------------------------------------- settings
 
 JOBID=$1
-MASS=$2
-HMASS=250
+MASS_H=$2
+MASS_A=$3
+SAMPLETAG=$4
 NEVENTS=100
 
 # Seed must be unique per job and NON-ZERO.
 # (A zero seed is rejected by RandomNumberGeneratorService.)
-MASS_NUM=${MASS#M}
+MASS_NUM=${MASS_A#M}
 SEED=$(( 100000 + MASS_NUM * 1000 + JOBID ))
 
 CAMPAIGN=RunIII2024Summer24
-SAMPLE=ggh01_M${HMASS}_Toa01a01_${MASS}_Tomumutautau
+SAMPLE=${SAMPLETAG}_${MASS_H}_Toa01a01_${MASS_A}_Tomumutautau
 
-RELBASE=/afs/cern.ch/user/i/isalazar/workspace/Run3
+RELBASE=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/CMSSW
 REL_GS=${RELBASE}/CMSSW_14_0_21
 REL_MINI=${RELBASE}/CMSSW_15_0_4
 REL_NANO=${RELBASE}/CMSSW_15_0_6
 
-OUTBASE=/eos/user/i/isalazar/Run3/hAA/samples/${CAMPAIGN}/H${HMASS}/${MASS}
+OUTBASE=/eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction/${CAMPAIGN}/${MASS_H}/${SAMPLETAG}/${MASS_A}
 
 FRAGMENT=Configuration/GenProduction/python/${SAMPLE}_13p6TeV_fragment.py
 
@@ -69,6 +70,9 @@ use_release () {
 # ---------------------------------------------------------------- setup
 
 WORKDIR=${_CONDOR_SCRATCH_DIR:-$(mktemp -d)}
+CONFIGBASE=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/MCProduction/MC-private-production/configs/${CAMPAIGN}
+mkdir -p "${CONFIGBASE}"
+
 cd "${WORKDIR}"
 
 log "job ${JOBID}, seed ${SEED}, ${NEVENTS} events"
@@ -103,6 +107,9 @@ cmsDriver.py "${FRAGMENT}" \
   --no_exec --mc -n ${NEVENTS}
 
 log "running GEN-SIM"
+if [ "${JOBID}" -eq 0 ]; then
+    cp GENSIM_cfg.py "${CONFIGBASE}/GENSIM_${MASS_H}_${MASS_A}.py"
+fi
 cmsRun GENSIM_cfg.py
 
 # ---------------------------------------------------------------- 2. DIGI→HLT
@@ -122,6 +129,9 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running DIGI-HLT (slowest step)"
+if [ "${JOBID}" -eq 0 ]; then
+    cp DR_cfg.py "${CONFIGBASE}/DR_${MASS_H}_${MASS_A}.py"
+fi
 cmsRun DR_cfg.py
 rm -f GENSIM.root          # reclaim scratch as we go
 
@@ -139,6 +149,9 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running RECO"
+if [ "${JOBID}" -eq 0 ]; then
+    cp AOD_cfg.py "${CONFIGBASE}/AOD_${MASS_H}_${MASS_A}.py"
+fi
 cmsRun AOD_cfg.py
 rm -f DR.root
 
@@ -158,6 +171,9 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running PAT"
+if [ "${JOBID}" -eq 0 ]; then
+    cp MINI_cfg.py "${CONFIGBASE}/MINI_${MASS_H}_${MASS_A}.py"
+fi
 cmsRun MINI_cfg.py
 rm -f AOD.root
 
@@ -178,6 +194,9 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running NANO"
+if [ "${JOBID}" -eq 0 ]; then
+    cp NANO_cfg.py "${CONFIGBASE}/NANO_${MASS_H}_${MASS_A}.py"
+fi
 cmsRun NANO_cfg.py
 
 # ---------------------------------------------------------------- stage out

@@ -11,7 +11,7 @@
 
 universe                = vanilla
 executable              = run_chain.sh
-arguments               = $(ProcId) $ENV(MASS)
+arguments               = $(ProcId) $ENV(MASS_H) $ENV(MASS_A) $ENV(SAMPLETAG)
 
 # Grid proxy: the DIGI step reads the premix pileup library over xrootd,
 # so each job needs credentials. Refresh $HOME/x509up before submitting.
@@ -27,9 +27,9 @@ when_to_transfer_output = ON_EXIT
 # NanoAOD straight to EOS itself.
 transfer_output_files   = ""
 
-output                  = logs/$ENV(MASS)/job_$(ProcId).out
-error                   = logs/$ENV(MASS)/job_$(ProcId).err
-log                     = logs/$ENV(MASS)/job_$(ProcId).log
+output                  = logs/$ENV(MASS_H)/$ENV(SAMPLETAG)/$ENV(MASS_A)/job_$(ProcId).out
+error                   = logs/$ENV(MASS_H)/$ENV(SAMPLETAG)/$ENV(MASS_A)/job_$(ProcId).err
+log                     = logs/$ENV(MASS_H)/$ENV(SAMPLETAG)/$ENV(MASS_A)/job_$(ProcId).log
 
 # Full chain on 100 events is roughly 1.5-2.5 h. "workday" (8 h) leaves
 # generous headroom; use "tomorrow" if jobs start hitting the wall.

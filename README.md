@@ -107,10 +107,10 @@ scram b -j 8
 cd /MC-private-production/condor
 ```
 
-Modify the paths in this script to your working directory path before running it (``RELBASE`` and ``OUTBASE``).
+Modify the paths in this script to your working directory path before running it (``RELBASE``, ``OUTBASE`` and ``CONFIGBASE``).
 
 ```
-bash submit_jobs.sh <MASS_A> #Example usage: ./submit_jobs.sh 5
+bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
-
+Sample tag list include: ggh01, vbfh01, wh01, zh01
 You can monitor the job status using ``condor_q``.

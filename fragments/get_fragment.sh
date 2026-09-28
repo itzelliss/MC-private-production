@@ -7,7 +7,7 @@
 #Arguments
 MASS_H=$1
 MASS_A=$2
-CMSSW=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/SignalProduction/CMSSW_14_0_21/src/Configuration/GenProduction/python
+CMSSW=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/CMSSW/CMSSW_14_0_21/src/Configuration/GenProduction/python
 
 cp ggh01_M125_Toa01a01_M10_Tomumutautau_13p6TeV_fragment.py ggh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
 cp vbfh01_M125_Toa01a01_M10_Tomumutautau_13p6TeV_fragment.py vbfh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
