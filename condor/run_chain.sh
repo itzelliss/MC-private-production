@@ -97,7 +97,7 @@ use_release "${REL_GS}"
 
 cmsDriver.py "${FRAGMENT}" \
   --python_filename GENSIM_cfg.py \
-  --eventcontent RAWSIM --datatier GEN-SIM \
+  --eventcontent RAWSIM,LHE --datatier GEN-SIM,LHE \
   --fileout file:GENSIM.root \
   --conditions ${GT_140} \
   --beamspot DBrealistic \
