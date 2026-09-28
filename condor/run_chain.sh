@@ -21,11 +21,11 @@ set -o pipefail
 
 # ---------------------------------------------------------------- settings
 
-JOBID=$1
+JOBID=$100
 MASS_H=$2
 MASS_A=$3
 SAMPLETAG=$4
-NEVENTS=100
+NEVENTS=2
 
 # Seed must be unique per job and NON-ZERO.
 # (A zero seed is rejected by RandomNumberGeneratorService.)
@@ -195,7 +195,7 @@ cmsDriver.py \
 
 log "running NANO"
 if [ "${JOBID}" -eq 0 ]; then
-    cp NANO_cfg.py "${CONFIGBASE}/NANO_${MASS_H}_${MASS_A}.py"
+    cp NANO_cfg.py "${CONFIGBASE}/NANOEDM_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun NANO_cfg.py
 

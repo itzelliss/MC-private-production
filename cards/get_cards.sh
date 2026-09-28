@@ -19,7 +19,7 @@ cd MH${MASS_H}/MA${MASS_A}
 
 for f in *M125*M10*; do
     new="${f/M125/M${MASS_H}}"
-    new="${new/M10/M${MASS_A}}"
+    new="${new/M10_/M${MASS_A}_}"
     mv "$f" "$new"
 done
 
@@ -45,7 +45,7 @@ set param_card mass 36 $MASS_A
 EOF
 
 #Modify the output directory for *proc_card.dat
-sed -i "s/M125/M${MASS_H}/; s/M10/M${MASS_A}/" *_proc_card.dat
+sed -i "s/M125/M${MASS_H}/; s/M10_/M${MASS_A}_/" *_proc_card.dat
 
 #Ran succesfully
 echo "Cards generated for MH${MASS_H}, MA${MASS_A}"
