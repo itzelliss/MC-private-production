@@ -11,8 +11,8 @@
 #
 # Campaign: RunIII2024Summer24
 #   GEN-SIM / DR / AOD : CMSSW_14_0_21   140X_mcRun3_2024_realistic_v26
-#   MiniAOD            : CMSSW_15_0_4    140X_mcRun3_2024_realistic_v26
-#   NanoAOD            : CMSSW_15_0_6    150X_mcRun3_2024_realistic_v2
+#   MiniAOD            : CMSSW_15_0_4    150X_mcRun3_2024_realistic_v4
+#   NanoAOD            : CMSSW_15_0_6    150X_mcRun3_2024_realistic_v4
 #   arch               : el8_amd64_gcc12
 #
 
@@ -45,7 +45,7 @@ OUTBASE=/eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction/${CAMPAIGN}/${MA
 FRAGMENT=Configuration/GenProduction/python/${SAMPLE}_13p6TeV_fragment.py
 
 GT_140=140X_mcRun3_2024_realistic_v26
-GT_150=150X_mcRun3_2024_realistic_v2
+GT_150=150X_mcRun3_2024_realistic_v4
 ERA=Run3_2024
 HLT_MENU=2024v14
 PREMIX="dbs:/Neutrino_E-10_gun/RunIIISummer24PrePremix-Premixlib2024_140X_mcRun3_2024_realistic_v26-v1/PREMIX"
@@ -164,7 +164,7 @@ cmsDriver.py \
   --eventcontent MINIAODSIM --datatier MINIAODSIM \
   --fileout file:MINI.root \
   --filein file:AOD.root \
-  --conditions ${GT_140} \
+  --conditions ${GT_150} \
   --customise Configuration/DataProcessing/Utils.addMonitoring \
   --step PAT \
   --geometry DB:Extended --era ${ERA} \
