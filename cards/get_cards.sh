@@ -48,4 +48,4 @@ EOF
 sed -i "s/M125/M${MASS_H}/; s/M10/M${MASS_A}/" *_proc_card.dat
 
 #Ran succesfully
-echo "Cards generated for M${MASS_A}"
+echo "Cards generated for MH${MASS_H}, MA${MASS_A}"
