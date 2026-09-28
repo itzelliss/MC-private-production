@@ -15,10 +15,10 @@ cp wh01_M125_Toa01a01_M10_Tomumutautau_13p6TeV_fragment.py wh01_M${MASS_H}_Toa01
 cp zh01_M125_Toa01a01_M10_Tomumutautau_13p6TeV_fragment.py zh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
 
 
-sed -i "s|M10|M${MASS_A}|g; s|M125|M${MASS_H}|g" ggh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
-sed -i "s|M10|M${MASS_A}|g; s|M125|M${MASS_H}|g" vbfh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
-sed -i "s|M10|M${MASS_A}|g; s|M125|M${MASS_H}|g" wh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
-sed -i "s|M10|M${MASS_A}|g; s|M125|M${MASS_H}|g" zh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
+sed -i "s|M10_|M${MASS_A_}|g; s|M125|M${MASS_H}|g" ggh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
+sed -i "s|M10_|M${MASS_A_}|g; s|M125|M${MASS_H}|g" vbfh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
+sed -i "s|M10_|M${MASS_A_}|g; s|M125|M${MASS_H}|g" wh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
+sed -i "s|M10_|M${MASS_A_}|g; s|M125|M${MASS_H}|g" zh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py
 
 cp ggh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py "$CMSSW/"
 cp vbfh01_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau_13p6TeV_fragment.py "$CMSSW/"
