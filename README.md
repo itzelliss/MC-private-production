@@ -50,11 +50,16 @@ cmsrel CMSSW_15_0_6      # NanoAOD
 ```
  
 ---
+## Configuration
+
+```bash
+cp paths.sh.example paths.sh
+----
 ## Generate cards for a specific mass point
 
 ```
 cd MC-private-production/cards/
-bash get_cards.sh <M_A mass> #Example: bash get_cards.sh 5
+bash get_cards.sh <MASS_H> <MASS_A> #Example: bash get_cards.sh 125 5
 ```
  ---
 ## Generate gridpacks
@@ -69,15 +74,16 @@ voms-proxy-info -timeleft
 ```
 Submit a job to generate the gridopack
 ```
-./submit_condor_gridpack_generation.sh \ ggh01_M125_Toa01a01_M<M_A-mass>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/M<M_A-mass> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
+./submit_condor_gridpack_generation.sh \ ggh01_M<MASS_H>_Toa01a01_M<MASS_A>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/MH<MASS_H>/MA<MASS_A> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
 ```
 For easier use you can use this bash script insetad of the last step:
 ```
 #!/bin/bash
 
-MASS=$1
+MASS_H=$1
+MASS_A=$2
 
-CARDS=~/workspace/Run3/MC-private-production/cards/M${MASS}
+CARDS=~/MC-private-production/cards/MH<MASS_H>/MA<MASS_A>
 
 if [ ! -d "$CARDS" ]; then
     echo "no cards at $CARDS"
@@ -85,7 +91,7 @@ if [ ! -d "$CARDS" ]; then
 fi
 
 ./submit_condor_gridpack_generation.sh \
-  ggh01_M125_Toa01a01_M${MASS}_Tomumutautau \
+  ggh01_M<MASS_H>_Toa01a01_M${MASS_A}_Tomumutautau \
   "$CARDS" \
   $PWD \
   el8_amd64_gcc12 \
@@ -96,7 +102,7 @@ fi
 ```
 cd YOURWORKDIRECTORY
 cd /MC-private-production/fragments
-bash get_fragment.sh <M_A mass> #Example: bash get_fragment.sh 5
+bash get_fragment.sh <MASS_H> <MASS_A> #Example: bash get_fragment.sh 125 5
 cd ../../CMSSW_14_0_21/src
 cmsenv
 scram b -j 8
@@ -106,10 +112,10 @@ scram b -j 8
 cd /MC-private-production/condor
 ```
 
-Modify the paths in this script to your working directory path before running it (``RELBASE`` and ``OUTBASE``).
+Modify the paths in this script to your working directory path before running it (``RELBASE``, ``OUTBASE`` and ``CONFIGBASE``).
 
 ```
-bash submit_jobs.sh <M_A mass> #Example usage: ./submit_jobs.sh 5
+bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
-
+Sample tag list include: ggh01, vbfh01, wh01, zh01
 You can monitor the job status using ``condor_q``.

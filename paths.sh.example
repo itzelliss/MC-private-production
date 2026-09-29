@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# ============================================================
+# Local configuration for MC private production
+# Edit these paths for your local setup.
+# ============================================================
+export MC_PRIVATE_PRODUCTION="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export RELBASE="/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/CMSSW"
+export OUTBASE="/eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction"
