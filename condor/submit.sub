@@ -1,17 +1,14 @@
 ####################################################################
 # Condor submission for h -> aa -> mumutautau private production
 #   campaign : RunIII2024Summer24
-#   mass     : m_a = 10 GeV
 #   100 jobs x 100 events = 10000 events
-#
-# Submit with:
-#   voms-proxy-init --voms cms --valid 192:00
-#   condor_submit submit_M10.sub
 ####################################################################
 
 universe                = vanilla
 executable              = run_chain.sh
 arguments               = $(ProcId) $ENV(MASS_H) $ENV(MASS_A) $ENV(SAMPLETAG)
+
+environment = "RELBASE=$ENV(RELBASE) OUTBASE=$ENV(OUTBASE) MC_PRIVATE_PRODUCTION=$ENV(MC_PRIVATE_PRODUCTION)"
 
 # Grid proxy: the DIGI step reads the premix pileup library over xrootd,
 # so each job needs credentials. Refresh $HOME/x509up before submitting.

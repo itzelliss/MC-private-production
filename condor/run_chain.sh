@@ -18,14 +18,13 @@
 
 set -e
 set -o pipefail
-
 # ---------------------------------------------------------------- settings
 
-JOBID=$100
+JOBID=$1
 MASS_H=$2
 MASS_A=$3
 SAMPLETAG=$4
-NEVENTS=2
+NEVENTS=100
 
 # Seed must be unique per job and NON-ZERO.
 # (A zero seed is rejected by RandomNumberGeneratorService.)
@@ -35,12 +34,13 @@ SEED=$(( 100000 + MASS_NUM * 1000 + JOBID ))
 CAMPAIGN=RunIII2024Summer24
 SAMPLE=${SAMPLETAG}_${MASS_H}_Toa01a01_${MASS_A}_Tomumutautau
 
-RELBASE=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/CMSSW
 REL_GS=${RELBASE}/CMSSW_14_0_21
 REL_MINI=${RELBASE}/CMSSW_15_0_4
 REL_NANO=${RELBASE}/CMSSW_15_0_6
 
-OUTBASE=/eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction/${CAMPAIGN}/${MASS_H}/${SAMPLETAG}/${MASS_A}
+echo $REL_GS
+
+OUTDIR=${OUTBASE}/${CAMPAIGN}/${MASS_H}/${SAMPLETAG}/${MASS_A}
 
 FRAGMENT=Configuration/GenProduction/python/${SAMPLE}_13p6TeV_fragment.py
 
@@ -70,7 +70,16 @@ use_release () {
 # ---------------------------------------------------------------- setup
 
 WORKDIR=${_CONDOR_SCRATCH_DIR:-$(mktemp -d)}
-CONFIGBASE=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/MCProduction/MC-private-production/configs/${CAMPAIGN}
+echo "===== ENVIRONMENT CHECK ====="
+echo "RELBASE=${RELBASE}"
+echo "OUTBASE=${OUTBASE}"
+echo "MC_PRIVATE_PRODUCTION=${MC_PRIVATE_PRODUCTION}"
+echo "PWD=$(pwd)"
+echo "============================="
+echo "CONFIGBASE=${MC_PRIVATE_PRODUCTION}/configs/${CAMPAIGN}"
+CONFIGBASE="${MC_PRIVATE_PRODUCTION}/configs/${CAMPAIGN}"
+echo $CONFIGBASE
+echo $OUTDIR
 mkdir -p "${CONFIGBASE}"
 
 cd "${WORKDIR}"
@@ -202,10 +211,10 @@ cmsRun NANO_cfg.py
 # ---------------------------------------------------------------- stage out
 
 log "staging out"
-mkdir -p "${OUTBASE}/miniaod" "${OUTBASE}/nanoaod"
+mkdir -p "${OUTDIR}/miniaod" "${OUTDIR}/nanoaod"
 
-cp MINI.root "${OUTBASE}/miniaod/MINI_${JOBID}.root"
-cp NANO.root "${OUTBASE}/nanoaod/NANO_${JOBID}.root"
+cp MINI.root "${OUTDIR}/miniaod/MINI_${JOBID}.root"
+cp NANO.root "${OUTDIR}/nanoaod/NANO_${JOBID}.root"
 
-ls -lh "${OUTBASE}/nanoaod/NANO_${JOBID}.root"
+ls -lh "${OUTDIR}/nanoaod/NANO_${JOBID}.root"
 log "job ${JOBID} finished OK"

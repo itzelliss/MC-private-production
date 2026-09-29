@@ -7,6 +7,11 @@
 #Example usage: ./get_cards.sh 125 15
 #############################################
 
+if [ $# -ne 2 ]; then
+    echo "Usage: ./get_cards.sh MASS_H MASS_A"
+    echo "Example: ./get_cards.sh 125 15"
+    exit 1
+fi
 
 #Arguments
 MASS_H=$1

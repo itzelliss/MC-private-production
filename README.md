@@ -50,6 +50,11 @@ cmsrel CMSSW_15_0_6      # NanoAOD
 ```
  
 ---
+## Configuration
+
+```bash
+cp paths.sh.example paths.sh
+----
 ## Generate cards for a specific mass point
 
 ```

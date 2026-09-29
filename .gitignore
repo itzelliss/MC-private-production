@@ -9,3 +9,4 @@ condor/logs/
 # python cruft
 __pycache__/
 *.pyc
+paths.sh
