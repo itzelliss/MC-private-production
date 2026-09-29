@@ -10,3 +10,4 @@ condor/logs/
 __pycache__/
 *.pyc
 paths.sh
+configs/

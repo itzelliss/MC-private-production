@@ -1,12 +1,9 @@
-# MC-private-production
+# MC-private-production for h → aa → μμττ for Run 3
  
-Private CMS signal samples for h → aa → μμττ for Run 3.
- 
-One MadGraph gridpack per pseudoscalar mass, then the full GEN-SIM → DIGI-HLT → AOD → MiniAOD → NanoAOD chain on HTCondor.
- 
----
- 
-## Setup
+- First generate one MadGraph gridpack per Higgs mass (MASS_H) and Pseudoscalar mass (MASS_A)
+- Follow GEN-SIM → DIGI-HLT → AOD → MiniAOD → NanoAOD chain on HTCondor.
+  
+## Setup and Configuration
  
 Log in to an **el8** node — the gridpacks and all three CMSSW releases are built for `el8_amd64_gcc12`:
  
@@ -48,20 +45,12 @@ cmsrel CMSSW_14_0_21     # GEN-SIM, DIGI-HLT, AOD
 cmsrel CMSSW_15_0_4      # MiniAOD
 cmsrel CMSSW_15_0_6      # NanoAOD
 ```
- 
----
-## Configuration
 
-```bash
+Copy paths.sh.example to paths.sh and update the user specific paths
+
+```
 cp paths.sh.example paths.sh
-----
-## Generate cards for a specific mass point
-
 ```
-cd MC-private-production/cards/
-bash get_cards.sh <MASS_H> <MASS_A> #Example: bash get_cards.sh 125 5
-```
- ---
 ## Generate gridpacks
 
 ```
@@ -69,14 +58,18 @@ cd YOURWORKDIRECTORY
 cd genproductions_scripts/bin/MadGraph5_aMCatNLO
 ```
 Make sure your proxy is active
+
 ```
 voms-proxy-info -timeleft
 ```
+
 Submit a job to generate the gridopack
+
 ```
 ./submit_condor_gridpack_generation.sh \ ggh01_M<MASS_H>_Toa01a01_M<MASS_A>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/MH<MASS_H>/MA<MASS_A> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
 ```
 For easier use you can use this bash script insetad of the last step:
+
 ```
 #!/bin/bash
 
@@ -98,7 +91,15 @@ fi
   CMSSW_14_0_21
 ```
 
+## Generate cards for a specific mass point
+
+```
+cd MC-private-production/cards/
+bash get_cards.sh <MASS_H> <MASS_A> #Example: bash get_cards.sh 125 5
+```
+
 ## Prepare the fragment
+
 ```
 cd YOURWORKDIRECTORY
 cd /MC-private-production/fragments
@@ -107,15 +108,13 @@ cd ../../CMSSW_14_0_21/src
 cmsenv
 scram b -j 8
 ```
+
 ## Submit jobs for event generation
+
 ```
 cd /MC-private-production/condor
-```
-
-Modify the paths in this script to your working directory path before running it (``RELBASE``, ``OUTBASE`` and ``CONFIGBASE``).
-
-```
 bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
-Sample tag list include: ggh01, vbfh01, wh01, zh01
+Current ample tag list include: ggh01, vbfh01, wh01, zh01
+
 You can monitor the job status using ``condor_q``.
