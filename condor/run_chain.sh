@@ -70,16 +70,7 @@ use_release () {
 # ---------------------------------------------------------------- setup
 
 WORKDIR=${_CONDOR_SCRATCH_DIR:-$(mktemp -d)}
-echo "===== ENVIRONMENT CHECK ====="
-echo "RELBASE=${RELBASE}"
-echo "OUTBASE=${OUTBASE}"
-echo "MC_PRIVATE_PRODUCTION=${MC_PRIVATE_PRODUCTION}"
-echo "PWD=$(pwd)"
-echo "============================="
-echo "CONFIGBASE=${MC_PRIVATE_PRODUCTION}/configs/${CAMPAIGN}"
 CONFIGBASE="${MC_PRIVATE_PRODUCTION}/configs/${CAMPAIGN}"
-echo $CONFIGBASE
-echo $OUTDIR
 mkdir -p "${CONFIGBASE}"
 
 cd "${WORKDIR}"
