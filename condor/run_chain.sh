@@ -44,6 +44,7 @@ OUTDIR=${OUTBASE}/${CAMPAIGN}/${MASS_H}/${SAMPLETAG}/${MASS_A}
 
 FRAGMENT=Configuration/GenProduction/python/${SAMPLE}_13p6TeV_fragment.py
 
+
 GT_140=140X_mcRun3_2024_realistic_v26
 GT_150=150X_mcRun3_2024_realistic_v4
 ERA=Run3_2024
