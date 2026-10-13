@@ -133,6 +133,7 @@ scram b -j 8
 cd /MC-private-production/condor
 bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
-Current sample tag list include: ggh01, vbfh01, wh01, zh01
-
+Current sample tag list include: ggh01, vbfh01, wh01, zh01.
+One can save the config for the first job by switching STORE_CONFIG=false to STORE_CONFIG=true in run_chain.sh.
+Note: The DRPremix config can be large, so keep STORE_CONFIG=false in regular runs.
 You can monitor the job status using ``condor_q``.

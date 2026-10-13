@@ -10,6 +10,12 @@
 if [ $# -ne 2 ]; then
     echo "Usage: ./get_cards.sh MASS_H MASS_A"
     echo "Example: ./get_cards.sh 125 15"
+    echo "MASS_H must be one of: 125, 250, 500, 750, 1000"
+    exit 1
+fi
+
+if [[ ! "$1" =~ ^(125|250|500|750|1000)$ ]]; then
+    echo "Error: MASS_H must be one of: 125, 250, 500, 750, 1000"
     exit 1
 fi
 
