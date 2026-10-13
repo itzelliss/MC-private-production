@@ -107,7 +107,7 @@ bash get_all_cards.sh
 ```
 
 ## Prepare the fragment
-Copies MH125-MA10 fragment and and make changes for the desired mass. Finally copies the fargments to CMSSW directory
+Copies MH125-MA10 fragment and and make changes for the desired mass. Finally copies the fragments to CMSSW directory.
 
 ```
 cd YOURWORKDIRECTORY
@@ -133,6 +133,6 @@ scram b -j 8
 cd /MC-private-production/condor
 bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
-Current ample tag list include: ggh01, vbfh01, wh01, zh01
+Current sample tag list include: ggh01, vbfh01, wh01, zh01
 
 You can monitor the job status using ``condor_q``.
