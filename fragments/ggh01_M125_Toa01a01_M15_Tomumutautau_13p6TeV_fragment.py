@@ -4,7 +4,7 @@ from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import 
 from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/s/sbaradia/PseudoScalar_Run3/SignalProduction/gridpacks/ggh01_M125_Toa01a01_M15_Tomumutautau_el8_amd64_gcc12_CMSSW_14_0_21_tarball.tar.xz'),
+    args = cms.vstring(f"root://eosuser.cern.ch/{__import__('os').environ.get('OUTBASE')}/gridpacks/ggh01_M125_Toa01a01_M15_Tomumutautau_el8_amd64_gcc12_CMSSW_14_0_21_tarball.tar.xz"),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),

@@ -24,7 +24,7 @@ JOBID=$1
 MASS_H=$2
 MASS_A=$3
 SAMPLETAG=$4
-NEVENTS=100
+NEVENTS=2
 
 # Seed must be unique per job and NON-ZERO.
 # (A zero seed is rejected by RandomNumberGeneratorService.)

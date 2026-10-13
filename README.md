@@ -91,19 +91,37 @@ fi
   CMSSW_14_0_21
 ```
 
-## Generate cards for a specific mass point
+## Generate the cards
+Copies cards from MH125/MA10 directory and make changes for the desired mass.
 
 ```
 cd MC-private-production/cards/
+```
+For a specific benchmark
+```
 bash get_cards.sh <MASS_H> <MASS_A> #Example: bash get_cards.sh 125 5
+```
+For all benchmark in one go
+```
+bash get_all_cards.sh 
 ```
 
 ## Prepare the fragment
+Copies MH125-MA10 fragment and and make changes for the desired mass. Finally copies the fargments to CMSSW directory
 
 ```
 cd YOURWORKDIRECTORY
 cd /MC-private-production/fragments
-bash get_fragment.sh <MASS_H> <MASS_A> #Example: bash get_fragment.sh 125 5
+```
+For a specific benchmark
+```
+bash get_fragments.sh <MASS_H> <MASS_A> #Example: bash get_fragment.sh 125 5
+```
+For all benchmark in one go
+```
+bash get_fragments.sh
+```
+```
 cd ../../CMSSW_14_0_21/src
 cmsenv
 scram b -j 8

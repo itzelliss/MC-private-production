@@ -40,4 +40,4 @@ request_disk            = 20 GB
 # failures reading the premix library are the usual cause.
 max_retries             = 3
 
-queue 100
+queue 1

@@ -17,8 +17,13 @@ fi
 MASS_H=$1
 MASS_A=$2
 
-mkdir -p MH${MASS_H}
-cp -r MH125/MA10 MH${MASS_H}/MA${MASS_A}
+if [ "$MASS_H" = "125" ] && [ "$MASS_A" = "10" ]; then
+    echo "-> Baseline template point (MH125, MA10) already exists. Skipping card generation."
+    exit 0
+fi
+
+mkdir -p MH${MASS_H}/MA${MASS_A}
+cp -r MH125/MA10/* MH${MASS_H}/MA${MASS_A}/
 
 cd MH${MASS_H}/MA${MASS_A}
 
