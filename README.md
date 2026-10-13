@@ -65,30 +65,51 @@ voms-proxy-info -timeleft
 
 Submit a job to generate the gridopack
 
+Example for a single benchmark:
 ```
-./submit_condor_gridpack_generation.sh \ ggh01_M<MASS_H>_Toa01a01_M<MASS_A>_Tomumutautau \ ~/workspace/Run3/MC-private-production/cards/MH<MASS_H>/MA<MASS_A> \ $PWD \ el8_amd64_gcc12 \ CMSSW_14_0_21
+./submit_condor_gridpack_generation.sh ggh01_M125_Toa01a01_M5_Tomumutautau /PATH_TO_REPO/MC-private-production/cards/MH125/MA5 $PWD el8_amd64_gcc12 CMSSW_14_0_21
 ```
-For easier use you can use this bash script insetad of the last step:
+For convenience, one can use the following bash script, keeping the desired production modes, H mass and a masses.
 
 ```
-#!/bin/bash
+#!/bin/bash                                                                                                                                                          
 
-MASS_H=$1
-MASS_A=$2
+PROD_MODES="ggh01 vbfh01 wh01 zh01"
 
-CARDS=~/MC-private-production/cards/MH<MASS_H>/MA<MASS_A>
+for MASS_H in 125 250 500 750 1000; do
 
-if [ ! -d "$CARDS" ]; then
-    echo "no cards at $CARDS"
-    exit 1
-fi
+    if [ "$MASS_H" -eq 125 ]; then
+        MASS_A_LIST=("3.6" $(seq 4 1 21) "25")
+    elif [ "$MASS_H" -eq 250 ]; then
+        MASS_A_LIST=("3.6" $(seq 5 5 25) "50")
+    elif [ "$MASS_H" -eq 500 ]; then
+        MASS_A_LIST=("3.6" $(seq 5 5 30) "40" "50" "100")
+    elif [ "$MASS_H" -eq 750 ]; then
+        MASS_A_LIST=("3.6" $(seq 10 5 30) $(seq 40 10 80) "150")
+    elif [ "$MASS_H" -eq 1000 ]; then
+        MASS_A_LIST=("3.6" $(seq 10 5 30) $(seq 40 10 60) "80" "100" "200")
+    fi
 
-./submit_condor_gridpack_generation.sh \
-  ggh01_M<MASS_H>_Toa01a01_M${MASS_A}_Tomumutautau \
-  "$CARDS" \
-  $PWD \
-  el8_amd64_gcc12 \
-  CMSSW_14_0_21
+    for MASS_A in "${MASS_A_LIST[@]}"; do
+
+        CARDS=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/MCProduction/MC-private-production/cards/MH"${MASS_H}"/MA"${MASS_A}"
+        if [ ! -d "$CARDS" ]; then
+            echo "Skipping: No cards found at $CARDS"
+            continue
+        fi
+
+        for PROD in $PROD_MODES; do
+
+            ./submit_condor_gridpack_generation.sh \
+              "${PROD}_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau" \
+              "$CARDS" \
+              "$PWD" \
+              el8_amd64_gcc12 \
+              CMSSW_14_0_21
+
+        done
+    done
+done
 ```
 
 ## Generate the cards
@@ -134,6 +155,9 @@ cd /MC-private-production/condor
 bash submit_jobs.sh <MASS_H> <MASS_A> <SAMPLETAG> #Example usage: ./submit_jobs.sh 125 5 vbfh01
 ```
 Current sample tag list include: ggh01, vbfh01, wh01, zh01.
+
 One can save the config for the first job by switching STORE_CONFIG=false to STORE_CONFIG=true in run_chain.sh.
+
 Note: The DRPremix config can be large, so keep STORE_CONFIG=false in regular runs.
+
 You can monitor the job status using ``condor_q``.
