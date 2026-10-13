@@ -42,6 +42,7 @@ Set up the three CMSSW releases. Do this from a **clean shell** and run each `cm
 export SCRAM_ARCH=el8_amd64_gcc12
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsrel CMSSW_14_0_21     # GEN-SIM, DIGI-HLT, AOD
+mkdir -p CMSSW_14_0_21/src/Configuration/GenProduction/python 
 cmsrel CMSSW_15_0_4      # MiniAOD
 cmsrel CMSSW_15_0_6      # NanoAOD
 ```
@@ -69,7 +70,13 @@ Example for a single benchmark:
 ```
 ./submit_condor_gridpack_generation.sh ggh01_M125_Toa01a01_M5_Tomumutautau /PATH_TO_REPO/MC-private-production/cards/MH125/MA5 $PWD el8_amd64_gcc12 CMSSW_14_0_21
 ```
-For convenience, one can use the following bash script to submit gridpack generation for more than one benchmark keeping the desired production modes, H mass and a masses. Suggest using screen or tmux when running for many values.
+For convenience, one can use submit_batch_gridpacks.sh to submit gridpack generation for more than one benchmark keeping the desired production modes, H mass and a masses. Suggest using screen or tmux when running for many values.
+
+Copy submit_batch_gridpacks.sh to genproductions_scripts/bin/MadGraph5_aMCatNLO 
+
+```
+bash submit_batch_gridpacks.sh
+```
 
 ```
 #!/bin/bash                                                                                                                                                          
@@ -110,6 +117,13 @@ for MASS_H in 125 250 500 750 1000; do
         done
     done
 done
+```
+To check if the generated gridpacks are good, use check_gridpacks.sh.
+
+Copy check_gridpacks.sh to genproductions_scripts/bin/MadGraph5_aMCatNLO 
+
+```
+bash check_gridpacks.sh
 ```
 
 ## Generate the cards
