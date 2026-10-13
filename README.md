@@ -72,55 +72,15 @@ Example for a single benchmark:
 ```
 For convenience, one can use submit_batch_gridpacks.sh to submit gridpack generation for more than one benchmark keeping the desired production modes, H mass and a masses. Suggest using screen or tmux when running for many values.
 
-Copy submit_batch_gridpacks.sh to genproductions_scripts/bin/MadGraph5_aMCatNLO 
+Copy **submit_batch_gridpacks.sh** to **genproductions_scripts/bin/MadGraph5_aMCatNLO** 
 
 ```
 bash submit_batch_gridpacks.sh
 ```
 
-```
-#!/bin/bash                                                                                                                                                          
+To check if the generated gridpacks are good, use **check_gridpacks.sh**
 
-PROD_MODES="ggh01 vbfh01 wh01 zh01"
-
-for MASS_H in 125 250 500 750 1000; do
-
-    if [ "$MASS_H" -eq 125 ]; then
-        MASS_A_LIST=("3.6" $(seq 4 1 21) "25")
-    elif [ "$MASS_H" -eq 250 ]; then
-        MASS_A_LIST=("3.6" $(seq 5 5 25) "50")
-    elif [ "$MASS_H" -eq 500 ]; then
-        MASS_A_LIST=("3.6" $(seq 5 5 30) "40" "50" "100")
-    elif [ "$MASS_H" -eq 750 ]; then
-        MASS_A_LIST=("3.6" $(seq 10 5 30) $(seq 40 10 80) "150")
-    elif [ "$MASS_H" -eq 1000 ]; then
-        MASS_A_LIST=("3.6" $(seq 10 5 30) $(seq 40 10 60) "80" "100" "200")
-    fi
-
-    for MASS_A in "${MASS_A_LIST[@]}"; do
-
-        CARDS=/PATH_TO_REPO/MC-private-production/cards/MH"${MASS_H}"/MA"${MASS_A}"
-        if [ ! -d "$CARDS" ]; then
-            echo "Skipping: No cards found at $CARDS"
-            continue
-        fi
-
-        for PROD in $PROD_MODES; do
-
-            ./submit_condor_gridpack_generation.sh \
-              "${PROD}_M${MASS_H}_Toa01a01_M${MASS_A}_Tomumutautau" \
-              "$CARDS" \
-              "$PWD" \
-              el8_amd64_gcc12 \
-              CMSSW_14_0_21
-
-        done
-    done
-done
-```
-To check if the generated gridpacks are good, use check_gridpacks.sh.
-
-Copy check_gridpacks.sh to genproductions_scripts/bin/MadGraph5_aMCatNLO 
+Copy **check_gridpacks.sh** to **genproductions_scripts/bin/MadGraph5_aMCatNLO** 
 
 ```
 bash check_gridpacks.sh
