@@ -52,6 +52,9 @@ PREMIX="dbs:/Neutrino_E-10_gun/RunIIISummer24PrePremix-Premixlib2024_140X_mcRun3
 
 export SCRAM_ARCH=el8_amd64_gcc12
 
+# Toggle this to "true" or "false" to turn config saving on/off globally
+STORE_CONFIG=false
+
 # ---------------------------------------------------------------- helpers
 
 log () { echo "[$(date '+%H:%M:%S')] === $* ==="; }
@@ -107,7 +110,7 @@ cmsDriver.py "${FRAGMENT}" \
   --no_exec --mc -n ${NEVENTS}
 
 log "running GEN-SIM"
-if [ "${JOBID}" -eq 0 ]; then
+if [ "$STORE_CONFIG" = true ] && [ "${JOBID}" -eq 0 ]; then
     cp GENSIM_cfg.py "${CONFIGBASE}/GENSIM_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun GENSIM_cfg.py
@@ -129,7 +132,7 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running DIGI-HLT (slowest step)"
-if [ "${JOBID}" -eq 0 ]; then
+if [ "$STORE_CONFIG" = true ] && [ "${JOBID}" -eq 0 ]; then
     cp DR_cfg.py "${CONFIGBASE}/DR_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun DR_cfg.py
@@ -149,7 +152,7 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running RECO"
-if [ "${JOBID}" -eq 0 ]; then
+if [ "$STORE_CONFIG" = true ] && [ "${JOBID}" -eq 0 ]; then
     cp AOD_cfg.py "${CONFIGBASE}/AOD_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun AOD_cfg.py
@@ -171,7 +174,7 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running PAT"
-if [ "${JOBID}" -eq 0 ]; then
+if [ "$STORE_CONFIG" = true ] && [ "${JOBID}" -eq 0 ]; then
     cp MINI_cfg.py "${CONFIGBASE}/MINI_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun MINI_cfg.py
@@ -194,7 +197,7 @@ cmsDriver.py \
   --no_exec --mc -n ${NEVENTS}
 
 log "running NANO"
-if [ "${JOBID}" -eq 0 ]; then
+if [ "$STORE_CONFIG" = true ] && [ "${JOBID}" -eq 0 ]; then
     cp NANO_cfg.py "${CONFIGBASE}/NANOEDM_${MASS_H}_${MASS_A}.py"
 fi
 cmsRun NANO_cfg.py
