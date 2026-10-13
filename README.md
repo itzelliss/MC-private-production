@@ -92,7 +92,7 @@ for MASS_H in 125 250 500 750 1000; do
 
     for MASS_A in "${MASS_A_LIST[@]}"; do
 
-        CARDS=/afs/cern.ch/work/s/sbaradia/public/PseudoscalarSearch_Run3/MCProduction/MC-private-production/cards/MH"${MASS_H}"/MA"${MASS_A}"
+        CARDS=/PATH_TO_REPO/MC-private-production/cards/MH"${MASS_H}"/MA"${MASS_A}"
         if [ ! -d "$CARDS" ]; then
             echo "Skipping: No cards found at $CARDS"
             continue
